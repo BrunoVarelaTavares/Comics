@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_marginBottom="20dp">
+
+    <ImageView
+        android:id="@+id/ivSearchItemImage"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="1dp"/>
+
+    <TextView
+        android:id="@+id/tvSearchItemTitle"
+        android:layout_width="match_parent"
+        android:textStyle="bold"
+        android:layout_height="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_toEndOf="@id/ivSearchItemImage"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvSearchItemNumber"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="15dp"
+        android:layout_below="@id/tvSearchItemTitle"
+        android:layout_toEndOf="@id/ivSearchItemImage"
+        android:maxHeight="25dp"
+        android:textColor="@color/gray_500"/>
+
+</RelativeLayout>

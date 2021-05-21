@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Comics</string>
+    <string name="data_not_found_error_message">Data not found</string>
+    <string name="no_network_connection_error_message">No internet connection</string>
+    <string name="loading_data_error_message">Error loading data</string>
+    <string name="error_inserting_favorite_message">Error inserting favorite</string>
+    <string name="error_removing_favorite_message">Error removing favorite</string>
+    <string name="empty_string">""</string>
+    <string name="add_favorite_label">Add Favorite</string>
+    <string name="see_explanation_label">See Explanation</string>
+    <string name="remove_favorite_label">Remove Favorite</string>
+    <string name="search_comics_label">Search Comics</string>
+    <string name="search_results_label">Search Results</string>
+    <string name="more_label">More</string>
+    <string name="favorites_label">Favorites</string>
+    <string name="detail_label">Detail</string>
+    <string name="share_link_label">Share Link</string>
+    <string name="open_xkcd_site_label">Open Xkcd Comic Page</string>
+    <string name="downloading_comic_data_description_label">Downloading Comic Data</string>
+</resources>
