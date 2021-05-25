@@ -3,6 +3,7 @@ package com.btavares.comics.main.presentation.search
 import android.os.Bundle
 import android.view.View
 import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.btavares.comics.R
@@ -21,11 +22,12 @@ class SearchFragment : InjectionFragment(R.layout.fragment_search) {
     private val searchAdapter : SearchResultAdapter by instance()
 
     private val stateObserver = Observer<SearchViewModel.ViewState> {
-        // homeProgressBar.isVisible = it.isLoading
-        // homeFragmentLayoutError.isVisible = it.isError
-        // tvErrorMessage.text = getString(it.errorMessageId)
-        searchViewSearchFra.setQuery(it.searchText, false)
-        searchAdapter.comics = it.comics
+         searchProgressBar.isVisible = it.isLoading
+         searchErrorLayout.isVisible = it.isError
+         searchResultsRV.isVisible = !it.isError
+         tvSearchErrorMessage.text = getString(it.errorSearchMessageId)
+         searchViewSearchFra.setQuery(it.searchText, false)
+         searchAdapter.comics = it.comics
 
     }
 

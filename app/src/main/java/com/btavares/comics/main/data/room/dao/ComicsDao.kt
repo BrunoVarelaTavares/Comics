@@ -15,6 +15,9 @@ internal interface ComicsDao {
     @Query("SELECT * FROM comics ORDER BY number DESC")
     suspend fun getAllComics(): List<ComicDataModel>
 
+    @Query("SELECT * FROM comics ORDER BY number DESC LIMIT 1")
+    suspend fun getLastComic(): ComicDataModel
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vararg comics: ComicDataModel)
 

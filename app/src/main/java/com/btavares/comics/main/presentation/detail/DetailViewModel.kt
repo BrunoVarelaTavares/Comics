@@ -2,13 +2,14 @@ package com.btavares.comics.main.presentation.detail
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
-import android.text.Html
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.viewModelScope
 import com.btavares.comics.BuildConfig
 import com.btavares.comics.R
 import com.btavares.comics.app.presentation.extension.getImageBitmap
+import com.btavares.comics.app.presentation.extension.saveImageInDirectory
 import com.btavares.comics.app.presentation.navigation.NavManager
 import com.btavares.comics.app.presentation.viewmodel.BaseAction
 import com.btavares.comics.app.presentation.viewmodel.BaseViewModel
@@ -16,8 +17,8 @@ import com.btavares.comics.app.presentation.viewmodel.BaseViewState
 import com.btavares.comics.main.domain.model.ComicDomainModel
 import com.btavares.comics.main.domain.usecase.InsertFavoriteUseCase
 import com.btavares.comics.main.domain.usecase.RemoveFavoriteUseCase
-import com.btavares.comics.main.presentation.home.HomeViewModel
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 internal class DetailViewModel (
     private val navManager: NavManager,
@@ -57,20 +58,30 @@ internal class DetailViewModel (
         )
 
         is Action.FavoriteInsertedSuccess -> state.copy(
+            isLoading = false,
+            isError = false,
             updateData = viewAction.favoriteInserted
 
         )
 
         is Action.FavoriteInsertFailure -> state.copy(
-            updateData = false
+            isLoading = false,
+            isError = true,
+            updateData = false,
+            errorMessageId = viewAction.errorMessageId
         )
 
         is Action.FavoriteRemovedSuccess -> state.copy(
+            isLoading = false,
+            isError = false,
             updateData = viewAction.favoriteRemoved
         )
 
         is Action.FavoriteRemoveFailure -> state.copy(
-            updateData = false
+            isLoading = false,
+            isError = true,
+            updateData = false,
+            errorMessageId = viewAction.errorMessageId
         )
     }
 
@@ -84,6 +95,7 @@ internal class DetailViewModel (
     }
 
 
+
     fun navigateToSeeComicExplanation(context : Context){
         val url = "${BuildConfig.EXPLAIN_XKCD_URL}${args.comic.number}"
         val builder = CustomTabsIntent.Builder()
@@ -91,6 +103,18 @@ internal class DetailViewModel (
         builder.setShowTitle(true)
         val customTabsIntent = builder.build()
         customTabsIntent.launchUrl(context, Uri.parse(url))
+    }
+
+    fun shareImage(context : Context) = viewModelScope.launch  {
+        val intent = Intent(Intent.ACTION_SEND).setType("image/jpeg")
+        val bitmap = getImageBitmap(context, args.comic.imageUrl!!)
+        val bytes = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val uri = saveImageInDirectory(context, bitmap)
+        if (uri != null) {
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            context.startActivity(intent)
+        }
     }
 
 
@@ -111,31 +135,31 @@ internal class DetailViewModel (
     fun shareComicLink(context: Context){
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.ACTION_VIEW, Uri.parse("${BuildConfig.BASE_URL}${args.comic.number}"))
-           type = "text/html"
+            putExtra(Intent.EXTRA_TEXT, "${BuildConfig.BASE_URL}${args.comic.number}")
+            type = "text/plain"
         }
         val shareIntent = Intent.createChooser(sendIntent, null)
         context.startActivity(shareIntent)
     }
 
+    fun getComic ()= args.comic
 
-    fun insertFavorite(context: Context)  = viewModelScope.launch {
-        args.comic.favorite = true
-        val imageBitmap = args.comic.imageUrl?.let { getImageBitmap(context, it) }
-        if (imageBitmap != null) {
-            insertFavoriteUseCase.execute(args.comic.number, imageBitmap).also { result ->
-                val action = when(result) {
-                    is InsertFavoriteUseCase.Result.Success ->
-                        Action.FavoriteInsertedSuccess(result.data)
+    fun insertFavorite(imageBitmap: Bitmap?)  = viewModelScope.launch {
+            if (imageBitmap != null) {
+               args.comic.favorite = true
+                insertFavoriteUseCase.execute(args.comic.number, imageBitmap).also { result ->
+                    val action = when(result) {
+                        is InsertFavoriteUseCase.Result.Success ->
+                            Action.FavoriteInsertedSuccess(result.data)
+                        is InsertFavoriteUseCase.Result.Error ->
+                             Action.FavoriteInsertFailure(R.string.error_inserting_favorite_message)
 
-                    is InsertFavoriteUseCase.Result.Error ->
-                        when(result.e){
-                            else -> Action.FavoriteInsertFailure(R.string.error_inserting_favorite_message)
-                        }
+                    }
+                    sendAction(action)
+
                 }
-                sendAction(action)
             }
-        }
+
     }
 
     fun removeFavorite()  = viewModelScope.launch {
@@ -144,11 +168,9 @@ internal class DetailViewModel (
             val action = when(result) {
                 is RemoveFavoriteUseCase.Result.Success ->
                     Action.FavoriteRemovedSuccess(result.data)
-
                 is RemoveFavoriteUseCase.Result.Error ->
-                    when(result.e){
-                        else -> Action.FavoriteRemoveFailure(R.string.error_removing_favorite_message)
-                    }
+                      Action.FavoriteRemoveFailure(R.string.error_removing_favorite_message)
+
             }
             sendAction(action)
         }

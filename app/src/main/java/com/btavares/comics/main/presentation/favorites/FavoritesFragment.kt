@@ -25,7 +25,6 @@ class FavoritesFragment : InjectionFragment(R.layout.fragment_favorites) {
         favErrorLayout.isVisible = it.isError
         tvFavErrorMessage.text = getString(it.errorMessageId)
         favoritesAdapter.comics = it.comics
-
     }
 
 

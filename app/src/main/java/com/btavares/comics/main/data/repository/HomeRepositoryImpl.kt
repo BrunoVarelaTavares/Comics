@@ -30,15 +30,11 @@ internal class HomeRepositoryImpl(
         }
     }
 
-
-
-
-    private suspend fun updateComicsDb() {
+    override suspend fun updateComicsDb() {
         var currentComic = comicsService.getCurrentComic()
         if (currentComic != null) {
             var currentComicNumber = currentComic.number
-            val comicsList = comicsDao.getAllComics()
-            val lastComic = comicsList.first()
+            val lastComic = comicsDao.getLastComic()
             while (lastComic.number < currentComicNumber) {
                 if (currentComic != null) {
                     comicsDao.insert(currentComic)
@@ -46,8 +42,11 @@ internal class HomeRepositoryImpl(
                 currentComicNumber -= 1
                 currentComic = getComic(currentComicNumber)
             }
-        }
 
+            val comic = comicsDao.getLastComic()
+            if (comic.number > 0 &&  sharePreferences.getLastComicNumber() != comic.number && sharePreferences.getLastComicNumber() < comic.number)
+                sharePreferences.saveLastComicNumber(comic.number)
+        }
     }
 
 
@@ -64,19 +63,26 @@ internal class HomeRepositoryImpl(
                 comicsDao.insert(currentComic)
             }
             currentComicNumber -= 1
-            percentage = 100 - (100 * currentComicNumber / originalComicNumber!!)
 
+            if (currentComicNumber == 0)
+                break
+
+            percentage = 100 - (100 * currentComicNumber / originalComicNumber!!)
             currentComic = getComic(currentComicNumber)
         }
 
+        val lastComic = comicsDao.getLastComic()
+        if (lastComic.number > 0)
+            sharePreferences.saveLastComicNumber(lastComic.number)
+
         sharePreferences.saveDownloadCompleted()
+
     }
 
-    private suspend fun getComic(comicNumber : Int) : ComicDataModel? {
+    override suspend fun getComic(comicNumber : Int) : ComicDataModel? {
         try {
             return  comicsService.getComicByNumber(comicNumber)
         } catch (e : HttpException) {
-
         } catch (e : Exception) {
             throw(e)
         }

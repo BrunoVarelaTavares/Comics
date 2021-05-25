@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/searchAppBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/backArrow"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@drawable/ic_baseline_arrow_back" />
+
+
+                <TextView
+                    android:id="@+id/tvSearchTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/backArrow"
+                    android:text="@string/search_results_label"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold|italic" />
+
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/searchViewSearchFra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toEndOf="@id/backArrow"
+                    android:layoutDirection="rtl"
+                    app:closeIcon="@drawable/ic_baseline_close"
+                    app:queryHint="@string/search_comics_label"
+                    app:searchHintIcon="@drawable/ic_baseline_search"
+                    app:searchIcon="@drawable/ic_baseline_search"
+                    app:theme="@style/SearchViewStyle" />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultsRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_margin="5dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchAppBarLayout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/searchErrorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:lottie_autoPlay="true"
+            android:background="@color/black"
+            app:lottie_loop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            app:lottie_fileName="error.json"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvSearchErrorMessage"
+            android:layout_marginBottom="50dp"/>
+
+
+        <TextView
+            android:id="@+id/tvSearchErrorMessage"
+            android:textColor="@color/red_error"
+            android:textSize="15sp"
+            android:textStyle="italic|bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <Button
+            android:id="@+id/btnSearchTryAgain"
+            android:text="@string/try_again_label"
+            android:textColor="@android:color/background_dark"
+            android:height="10dp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            android:width="50dp"
+            android:textSize="15sp"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textAllCaps="false"
+            app:cornerRadius="10dp"
+            android:layout_marginTop="50dp"
+            app:backgroundTint="@color/indigo_50"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSearchErrorMessage"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <ProgressBar
+        android:id="@+id/searchProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

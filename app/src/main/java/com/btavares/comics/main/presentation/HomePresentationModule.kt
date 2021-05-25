@@ -23,7 +23,8 @@ val presentationModule = Kodein.Module("${MODULE_NAME}Module") {
 
 
     bind<HomeViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {
-        KotlinViewModelProvider.of(context){HomeViewModel(instance(), instance(), instance(), instance(), instance(), instance(), instance(), instance())}
+        KotlinViewModelProvider.of(context){HomeViewModel(instance(), instance(), instance(), instance(),
+                instance(), instance(), instance(), instance())}
     }
 
     bind<DetailViewModel>() with scoped<Fragment>(AndroidLifecycleScope).singleton {

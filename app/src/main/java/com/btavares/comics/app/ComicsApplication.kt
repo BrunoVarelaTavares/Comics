@@ -26,7 +26,7 @@ class ComicsApplication : Application(), KodeinAware {
     }
 
 
-    private lateinit var context: Context
+    lateinit var context: Context
 
 
     override fun onCreate() {

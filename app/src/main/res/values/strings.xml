@@ -16,5 +16,10 @@
     <string name="detail_label">Detail</string>
     <string name="share_link_label">Share Link</string>
     <string name="open_xkcd_site_label">Open Xkcd Comic Page</string>
-    <string name="downloading_comic_data_description_label">Downloading Comic Data</string>
+    <string name="loading_comic_data_description_label">Loading Comic Data</string>
+    <string name="share_comic_label">Share Comic</string>
+    <string name="notification_subtitle">We have a new comic</string>
+    <string name="try_again_label">Try Again</string>
+    <string name="go_to_favorites_label">Go to Favorites</string>
+    <string name="close_label">Close</string>
 </resources>

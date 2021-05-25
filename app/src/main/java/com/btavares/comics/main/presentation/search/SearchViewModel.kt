@@ -47,11 +47,15 @@ internal class SearchViewModel (
         )
 
         is Action.ComicsSearchLoadingSuccess -> state.copy(
+            isLoading = false,
+            isError = false,
             comics = viewAction.searchComicsResult
 
         )
 
         is Action.ComicsSearchLoadingFailure -> state.copy(
+            isLoading = false,
+            isError = true,
             errorSearchMessageId = viewAction.errorMessageId
         )
     }

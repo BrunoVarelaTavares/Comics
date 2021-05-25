@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_favorites"
+        android:title="@string/favorites_label" />
+    <item android:id="@+id/share_link"
+        android:title="@string/share_link_label" />
+    <item android:id="@+id/share_image"
+        android:title="@string/share_comic_label" />
+    <item android:id="@+id/open_site_item"
+        android:title="@string/open_xkcd_site_label" />
+    <item android:id="@+id/explanation_item"
+        android:title="@string/see_explanation_label" />
+</menu>
+

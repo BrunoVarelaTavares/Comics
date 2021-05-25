@@ -60,11 +60,7 @@ internal class FavoritesViewModel (
         getFavoritesComicsUseCase.execute().also { result ->
             val action = when(result) {
                 is GetFavoritesComicsUseCase.Result.Success ->
-                    if (result.data.isEmpty())
-                        Action.FavoritesComicsLoadingFailure(R.string.data_not_found_error_message)
-                    else
                         Action.FavoritesComicsLoadingSuccess(result.data)
-
                 is GetFavoritesComicsUseCase.Result.Error ->
                        Action.FavoritesComicsLoadingFailure(R.string.loading_data_error_message)
 

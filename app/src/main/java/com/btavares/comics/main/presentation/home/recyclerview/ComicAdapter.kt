@@ -22,6 +22,9 @@ internal class ComicAdapter: RecyclerView.Adapter<ComicAdapter.ViewHolder>() {
     private var mOnAddFavoriteClickListener: ((comic : ComicDomainModel) -> Unit)? = null
     private var mOnRemoveFavoriteClickListener: ((comic : ComicDomainModel) -> Unit)? = null
 
+
+
+
     internal inner class ViewHolder(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
