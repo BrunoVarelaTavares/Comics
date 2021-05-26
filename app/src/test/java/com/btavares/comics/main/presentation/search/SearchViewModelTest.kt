@@ -111,7 +111,7 @@ class SearchViewModelTest {
         viewModel.stateLiveData.value shouldBeEqualTo SearchViewModel.ViewState(
             isLoading = false,
             isError = true,
-            errorSearchMessageId = R.string.data_not_found_error_message,
+            errorSearchMessageId = R.string.comic_not_found_error_message,
             comics = mutableListOf()
         )
 

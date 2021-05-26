@@ -4,9 +4,9 @@ import android.content.Context
 
 internal class ComicPreferences(private val context: Context) {
 
-    val name = "comic_preferences"
-    val download = "downloaded"
-    val lastComicNumber = "last_comic_number"
+    private val name = "comic_preferences"
+    private val download = "downloaded"
+    private val last = "last_comic_number"
 
     fun saveDownloadCompleted() {
         val sharePreferences = this.context.getSharedPreferences(name, Context.MODE_PRIVATE)
@@ -23,13 +23,13 @@ internal class ComicPreferences(private val context: Context) {
     fun saveLastComicNumber(number : Int) {
         val sharePreferences = this.context.getSharedPreferences(name, Context.MODE_PRIVATE)
         val editor = sharePreferences.edit()
-        editor.putInt(lastComicNumber, number)
+        editor.putInt(last, number)
         editor.apply()
     }
 
     fun getLastComicNumber() : Int {
         val sharePreferences = this.context.getSharedPreferences(name, Context.MODE_PRIVATE)
-        return sharePreferences.getInt(lastComicNumber, 0)
+        return sharePreferences.getInt(last, 0)
     }
 
 

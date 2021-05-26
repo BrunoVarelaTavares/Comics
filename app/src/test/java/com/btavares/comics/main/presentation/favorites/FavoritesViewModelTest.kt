@@ -101,8 +101,7 @@ class FavoritesViewModelTest {
         //then
         viewModel.stateLiveData.value shouldBeEqualTo FavoritesViewModel.ViewState(
             isLoading = false,
-            isError = true,
-            errorMessageId = R.string.data_not_found_error_message,
+            isError = false,
             comics = listOf()
         )
 

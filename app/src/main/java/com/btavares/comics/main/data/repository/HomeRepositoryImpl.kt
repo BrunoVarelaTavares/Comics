@@ -44,7 +44,8 @@ internal class HomeRepositoryImpl(
             }
 
             val comic = comicsDao.getLastComic()
-            if (comic.number > 0 &&  sharePreferences.getLastComicNumber() != comic.number && sharePreferences.getLastComicNumber() < comic.number)
+            val lastComicNumber = sharePreferences.getLastComicNumber()
+            if (comic.number > 0 && lastComicNumber != comic.number && lastComicNumber < comic.number)
                 sharePreferences.saveLastComicNumber(comic.number)
         }
     }

@@ -167,7 +167,7 @@ class HomeViewModelTest {
 
 
     @Test
-    fun ` verify state when DownloadComicsUseCase comics is complete `() {
+    fun ` verify state when DownloadComicsUseCase is complete `() {
         //given
         coEvery { mockSharedPreferences.isDownloadCompleted() } returns true
         coEvery { mockGetAllComicsUseCase.execute() } returns GetAllComicsUseCase.Result.Success(emptyList())
@@ -180,7 +180,7 @@ class HomeViewModelTest {
         viewModel.stateLiveData.value shouldBeEqualTo HomeViewModel.ViewState(
             isLoading=false,
             downloadVisible=true,
-            downloadCompleted=true,
+            downloadCompleted=false,
             isErrorDownloadL=false
         )
 
