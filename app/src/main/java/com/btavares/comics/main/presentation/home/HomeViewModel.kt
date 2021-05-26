@@ -38,6 +38,8 @@ internal class HomeViewModel  (
     private val sharedPreferences: ComicPreferences
 ) : BaseViewModel<HomeViewModel.ViewState, HomeViewModel.Action>(ViewState()) {
 
+    private var isDownloadStart = false
+
     internal data class ViewState(
         val isLoading: Boolean = true,
         val isError: Boolean = false,
@@ -263,7 +265,10 @@ internal class HomeViewModel  (
             val action = when(result) {
                 is GetAllComicsUseCase.Result.Success ->
                    if (result.data.isEmpty()) {
-                       getDownloadComics()
+                       if (!sharedPreferences.isDownloadCompleted() && !isDownloadStart) {
+                           isDownloadStart = true
+                           getDownloadComics()
+                       }
                        Action.ComicsEmptyList(emptyList())
                    }
                    else
@@ -285,7 +290,7 @@ internal class HomeViewModel  (
             val action = when(result) {
                 is SearchComicsUseCase.Result.Success ->
                     if (result.data.isEmpty())
-                        Action.ComicsSearchLoadingFailure(R.string.data_not_found_error_message)
+                        Action.ComicsSearchLoadingSuccess(mutableListOf())
                     else
                         Action.ComicsSearchLoadingSuccess(result.data)
 

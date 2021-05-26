@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Comics</string>
     <string name="data_not_found_error_message">Data not found</string>
+    <string name="comic_not_found_error_message">Comic Not Found</string>
     <string name="no_network_connection_error_message">No internet connection</string>
     <string name="loading_data_error_message">Error loading data</string>
     <string name="error_inserting_favorite_message">Error inserting favorite</string>

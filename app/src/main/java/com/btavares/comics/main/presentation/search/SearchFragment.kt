@@ -26,7 +26,6 @@ class SearchFragment : InjectionFragment(R.layout.fragment_search) {
          searchErrorLayout.isVisible = it.isError
          searchResultsRV.isVisible = !it.isError
          tvSearchErrorMessage.text = getString(it.errorSearchMessageId)
-         searchViewSearchFra.setQuery(it.searchText, false)
          searchAdapter.comics = it.comics
 
     }
@@ -51,10 +50,12 @@ class SearchFragment : InjectionFragment(R.layout.fragment_search) {
             viewModel.navigateBackToHomeFragment()
         }
 
-        searchViewSearchFra.isIconified = true
         setUpSearchView()
+
         observe(viewModel.stateLiveData, stateObserver)
         viewModel.loadData()
+        searchViewSearchFra.setQuery(viewModel.getSearchText(), false)
+        searchViewSearchFra.isIconified = false
     }
 
     private fun setUpSearchView() {

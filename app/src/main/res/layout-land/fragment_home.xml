@@ -147,7 +147,7 @@
             android:id="@+id/btnHomeTryAgain"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="16:8"
+            app:layout_constraintDimensionRatio="6:6"
             android:gravity="center"
             android:text="@string/try_again_label"
             android:textAllCaps="false"
@@ -166,9 +166,7 @@
             android:id="@+id/btnFavorites"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="16:8"
-            android:width="50dp"
-            android:height="10dp"
+            app:layout_constraintDimensionRatio="6:6"
             android:gravity="center"
             android:text="@string/go_to_favorites_label"
             android:textAllCaps="false"
@@ -234,9 +232,10 @@
                 android:textColor="@color/indigo_700"
                 android:textSize="38sp"
                 android:textStyle="bold|italic"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/downloadProgressBar"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/guideline1" />
 
             <ProgressBar
                 android:id="@+id/downloadProgressBar"
@@ -247,7 +246,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/guideline1"
-                app:layout_constraintVertical_bias="0.514"
                 tools:progress="60" />
 
             <TextView

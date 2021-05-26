@@ -49,6 +49,7 @@ internal class SearchViewModel (
         is Action.ComicsSearchLoadingSuccess -> state.copy(
             isLoading = false,
             isError = false,
+            searchText = "",
             comics = viewAction.searchComicsResult
 
         )
@@ -68,12 +69,14 @@ internal class SearchViewModel (
         }
     }
 
+    fun getSearchText() = args.searchText
+
     fun searchComics(searchText: String)  = viewModelScope.launch {
         searchComicsUseCase.execute(searchText).also { result ->
             val action = when(result) {
                 is SearchComicsUseCase.Result.Success ->
                     if (result.data.isEmpty())
-                        Action.ComicsSearchLoadingFailure(R.string.data_not_found_error_message)
+                        Action.ComicsSearchLoadingFailure(R.string.comic_not_found_error_message)
                     else
                         Action.ComicsSearchLoadingSuccess(result.data)
 
