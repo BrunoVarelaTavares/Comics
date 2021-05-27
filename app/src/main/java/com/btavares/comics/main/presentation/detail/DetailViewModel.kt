@@ -94,6 +94,7 @@ internal class DetailViewModel (
             sendAction(Action.ComicDetailLoadingFailure)
     }
 
+    fun isFavorite() = args.comic.favorite
 
 
     fun navigateToSeeComicExplanation(context : Context){

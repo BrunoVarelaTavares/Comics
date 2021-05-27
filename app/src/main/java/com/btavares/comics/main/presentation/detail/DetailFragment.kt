@@ -96,8 +96,7 @@ class DetailFragment : InjectionFragment(R.layout.fragment_detail) {
             detailAppBarLayout.isVisible = false
             fullImageLayout.isVisible = true
             btnExplanation.isVisible = false
-            btnRemoveFav.isVisible = false
-            btnAddFav.isVisible = false
+            hideFavoritesButtons()
 
         }
 
@@ -105,8 +104,7 @@ class DetailFragment : InjectionFragment(R.layout.fragment_detail) {
             fullImageLayout.isVisible = false
             detailAppBarLayout.isVisible = true
             btnExplanation.isVisible = true
-            btnRemoveFav.isVisible = true
-            btnAddFav.isVisible = true
+            showFavoritesButtons()
         }
 
         observe(viewModel.stateLiveData, stateObserver)
@@ -114,6 +112,18 @@ class DetailFragment : InjectionFragment(R.layout.fragment_detail) {
 
     }
 
+    private fun hideFavoritesButtons() {
+        if (viewModel.isFavorite())
+            btnRemoveFav.isVisible = false
+        else
+            btnAddFav.isVisible = false
+    }
+    private fun showFavoritesButtons() {
+        if (!viewModel.isFavorite())
+            btnAddFav.isVisible = true
+        else
+            btnRemoveFav.isVisible = true
+    }
 
 
     private fun setUpPopupMenu(context: Context) {
