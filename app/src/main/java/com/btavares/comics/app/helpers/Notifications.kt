@@ -18,6 +18,7 @@ import com.btavares.comics.app.presentation.MainActivity
 import com.btavares.comics.app.presentation.extension.vectorToBitmap
 import com.btavares.comics.app.sharedpreferences.ComicPreferences
 import com.btavares.comics.main.data.retrofit.ComicsService
+import com.btavares.comics.main.data.room.dao.ComicsDao
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.closestKodein
@@ -31,14 +32,19 @@ internal  class Notifications(context: Context, params : WorkerParameters
 
     private val service : ComicsService by instance()
 
+    private val comicsDao: ComicsDao by instance()
+
     private val sharedPreferences : ComicPreferences by instance()
 
     override suspend fun doWork(): Result {
         val comic = service.getCurrentComic()
         val lastComicNumber = sharedPreferences.getLastComicNumber()
         if (sharedPreferences.isDownloadCompleted() && comic?.number != null) {
-            if (comic.number > lastComicNumber)
+            if (comic.number > lastComicNumber) {
+                comicsDao.insert(comic)
+                sharedPreferences.saveLastComicNumber(comic.number)
                 sendNotification(inputData.getLong(NOTIFICATION_ID, 0).toInt())
+            }
         }
         return success()
     }
